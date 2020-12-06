@@ -1,0 +1,68 @@
+/*
+   Este arquivo faz parte da JCFLIGHT.
+
+   JCFLIGHT é um software livre: você pode redistribuí-lo e/ou modificar
+   sob os termos da GNU General Public License conforme publicada por
+   a Free Software Foundation, seja a versão 3 da Licença, ou
+   (à sua escolha) qualquer versão posterior.
+
+  JCFLIGHT é distribuído na esperança de ser útil,
+  mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de
+  COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO FIM. Veja o
+  GNU General Public License para mais detalhes.
+
+   Você deve ter recebido uma cópia da Licença Pública Geral GNU
+  junto com a JCFLIGHT. Caso contrário, consulte <http://www.gnu.org/licenses/>.
+*/
+
+#include "FAILSAFE.h"
+#include "Common/VARIABLES.h"
+#include "WayPointNavigation/WAYPOINT.h"
+#include "StorageManager/EEPROMSTORAGE.h"
+
+#define THIS_LOOP_RATE 50     //HZ
+#define FAILSAFE_DELAY 1      //SEGUNDO
+#define FAILSAFE_DELAY2 0.25f //MS
+
+void FailSafeCheck()
+{
+  if (Fail_Safe_System > (THIS_LOOP_RATE * FAILSAFE_DELAY2) && COMMAND_ARM_DISARM)
+    ImmediatelyFailSafe = true;
+  else
+    ImmediatelyFailSafe = false;
+  if (Fail_Safe_System > (THIS_LOOP_RATE * FAILSAFE_DELAY) && COMMAND_ARM_DISARM)
+  {
+    NormalizeFailSafe();
+    Fail_Safe_Event = true;
+    RadioControllOutput[THROTTLE] = 1500;
+    RadioControllOutput[YAW] = 1500;
+    RadioControllOutput[PITCH] = 1500;
+    RadioControllOutput[ROLL] = 1500;
+    RadioControllOutput[AUX1] = 1000;
+    RadioControllOutput[AUX2] = 1000;
+    RadioControllOutput[AUX3] = 1000;
+    RadioControllOutput[AUX4] = 1000;
+    RadioControllOutput[AUX5] = 1000;
+    RadioControllOutput[AUX6] = 1000;
+    RadioControllOutput[AUX7] = 1000;
+    RadioControllOutput[AUX8] = 1000;
+  }
+  else
+    Fail_Safe_Event = false;
+  if (COMMAND_ARM_DISARM)
+    Fail_Safe_System++;
+  else
+    SetFlightModes[RTH_MODE] = 0;
+}
+
+void NormalizeFailSafe()
+{
+  SetFlightModes[STABILIZE_MODE] = 1;
+  SetFlightModes[IOC_MODE] = 0;
+  SetFlightModes[ALTITUDEHOLD_MODE] = 0;
+  SetFlightModes[GPSHOLD_MODE] = 0;
+  SetFlightModes[RTH_MODE] = 1;
+  SetFlightModes[ATACK_MODE] = 0;
+  Flip_Mode = false;
+  Do_WayPoint = false;
+}
