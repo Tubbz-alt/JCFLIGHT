@@ -23,6 +23,12 @@ class MEMORYCLASS
 public:
   uint16_t Check();
   uint8_t GetPercentageRAMUsed();
+
+private:
+  bool MemRamChecked = false;
+  uint8_t *HEAPPTR;
+  uint8_t *STACKPTR;
+  float Free;
 };
 extern MEMORYCLASS MEMORY;
 #endif
