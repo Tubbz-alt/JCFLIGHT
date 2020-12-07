@@ -15,15 +15,24 @@
   junto com a JCFLIGHT. Caso contrário, consulte <http://www.gnu.org/licenses/>.
 */
 
-#include "UART2MODE.h"
+#include "SERVOSPWR.h"
 #include "StorageManager/EEPROMSTORAGE.h"
 #include "BAR/BAR.h"
 
-void UART2Mode_Initialization()
+void ServosPWR(void)
 {
-    DDRA |= (1 << DDD0); //DEFINE A PORTA DIGITAL 22 COMO SAIDA
-    if (STORAGEMANAGER.Read_8Bits(UART2_ADDR) != 1)
-        PORTA |= 1 << 0; //ATIVA OS TRASISTORES DE CORTE E O DE BY-PASS
+    DDRA |= (1 << DDD1); //DEFINE A PORTA DIGITAL 23 COMO SAIDA
+    DDRA |= (1 << DDD2); //DEFINE A PORTA DIGITAL 24 COMO SAIDA
+    if (STORAGEMANAGER.Read_8Bits(FRAMETYPE_ADDR) == 3 ||
+        STORAGEMANAGER.Read_8Bits(FRAMETYPE_ADDR) == 4 ||
+        STORAGEMANAGER.Read_8Bits(FRAMETYPE_ADDR) == 5)
+    {
+        PORTA |= 1 << 1;    //ATIVA A ALIMENTAÇÃO DOS SERVOS
+        PORTA &= ~(1 << 2); //ATIVA A ALIMENTAÇÃO DOS SERVOS
+    }
     else
-        PORTA &= ~(1 << 0); //PREPARA OS TRANSISTORES PARA O MODO SBUS
+    {
+        PORTA &= ~(1 << 1); //DESATIVA A ALIMENTAÇÃO DOS SERVOS
+        PORTA |= 1 << 2;    //DESATIVA A ALIMENTAÇÃO DOS SERVOS
+    }
 }

@@ -15,9 +15,8 @@
   junto com a JCFLIGHT. Caso contrário, consulte <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FUNCTIONSNAME_H_
-#define FUNCTIONSNAME_H_
+#ifndef SERVOSPWR_H_
+#define SERVOSPWR_H
 #include "Arduino.h"
-extern char GetFunctionName[20];
-void UpdateFunctionName(uint8_t FunctionNumber);
+void ServosPWR(void);
 #endif
