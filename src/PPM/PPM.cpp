@@ -35,9 +35,9 @@ void ConfigurePPMRegisters()
 {
   if ((STORAGEMANAGER.Read_8Bits(UART2_ADDR) != 1) || (STORAGEMANAGER.Read_8Bits(UART2_ADDR) != 2))
   {
-    DDRK &= ~(1 << 7);  //DECLARA COMO SAÍDA
+    DDRK &= ~(1 << 7);  //DECLARA COMO ENTRADA
     PORTK |= (1 << 7);  //ATIVA O PULL-UP
-    PCICR |= (1 << 2);  //CONFIGURA COMO RISING
+    PCICR |= (1 << 2);  //CONFIGURA COMO FALLING
     PCMSK2 |= (1 << 7); //ATIVA A INTERRUPÇÃO
   }
   //FlySky FS-i6, FlySky FS-i6s, FlySky FS-i6x, FlySky FS-iA10B, TGY-I6(OU TGY-I6 OU FS-i6 ATUALIZADO PARA 10 CANAIS)

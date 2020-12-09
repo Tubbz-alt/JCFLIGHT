@@ -15,29 +15,34 @@
   junto com a JCFLIGHT. Caso contrário, consulte <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TIMEMONITOR_h
-#define TIMEMONITOR_h
+#ifndef SAFETYBUTTON_H_
+#define SAFETYBUTTON_h_
 #include "Arduino.h"
-//#define ENABLE_TIMEMONITOR
-enum Function_Names
-{
-  SLOW_LOOP = 0,
-  MEDIUM_LOOP,
-  FAST_MEDIUM_LOOP,
-  FAST_LOOP,
-  TOTAL_LOOP,
-  SIZE_LOOPS
-};
-class AVRTimeMonitor
+class SAFETYBUTTONCLASS
 {
 public:
-  void MeasuringStartTime(uint8_t FunctionNumber);
-  void MeasuringFinishTime();
+  bool SafeButtonEnabled();
+  bool GetSafeStateToOutput();
+  void Initialization();
+  void UpdateRoutine();
 
 private:
-  float AVRTotalTime = 0;
-  uint32_t StartTime = 0;
-  uint32_t EndTime = 0;
+  enum class Led_Pattern : uint16_t
+  {
+    FMU_INIT_ARM = 0x0003,
+    FMU_REFUSE_TO_ARM = 0x5555,
+    FMU_SAFE_TO_ARM = 0xffff,
+  };
+  bool GetButtonInterval();
+  bool GetButtonState();
+  bool WaitToNextProcess = false;
+  bool SafeStateToApplyPulse = false;
+  uint8_t DetectRise = 0;
+  uint8_t Blink_Counter = 0;
+  uint32_t LastDebounceTime = 0;
+  void UpdateLedStatus(enum Led_Pattern Instance);
+  void SetStateToLed(bool State);
+  void FlashButton();
 };
-extern AVRTimeMonitor AVRTIMEMONITOR;
+extern SAFETYBUTTONCLASS SAFETYBUTTON;
 #endif

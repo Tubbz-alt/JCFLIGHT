@@ -41,6 +41,7 @@ static int32_t XYZ_CompassBias[3] = {0, 0, 0};
 
 void CompassReadClass::Initialization()
 {
+  //SAIA DA FUNÇÃO SE NÃO FOR ENCONTRADO NENHUM COMPASS NO BARRAMENTO I2C
   if (!I2C.CompassFound)
     return;
   if (STORAGEMANAGER.Read_8Bits(COMPASS_TYPE_ADDR) <= 3)
@@ -137,8 +138,6 @@ bool CompassReadClass::PushBias(uint8_t InputBias)
 
 void CompassReadClass::InitialReadBufferData()
 {
-  if (!I2C.CompassFound)
-    return;
   if ((Compass_Type == COMPASS_HMC5843) || (Compass_Type == COMPASS_HMC5883))
   {
     I2C.SensorsRead(MagAddress, 0x03);
@@ -148,8 +147,6 @@ void CompassReadClass::InitialReadBufferData()
 
 void CompassReadClass::ReadBufferData()
 {
-  if (!I2C.CompassFound)
-    return;
   if (Compass_Type == COMPASS_AK8975)
   {
     I2C.SensorsRead(0x0C, 0x03);
@@ -168,17 +165,25 @@ void CompassReadClass::ReadBufferData()
 
 void CompassReadClass::Constant_Read()
 {
+  //SAIA DA FUNÇÃO SE NÃO FOR ENCONTRADO NENHUM COMPASS NO BARRAMENTO I2C
   if (!I2C.CompassFound)
     return;
+
   static float MagnetometerRead[3];
   static int16_t MagCalibrationMinVector[3];
   static int16_t MagCalibrationMaxVector[3];
   static uint32_t NextUpdate = 0;
   static uint32_t CalibrationTime = 0;
   uint32_t CompassTimer = AVRTIME.SchedulerMicros();
+
+  //SAIA DA FUNÇÃO SE O TEMPO DE ATUALIZAÇÃO NÃO FOR VALIDO
   if (!CalibratingCompass && CompassTimer < NextUpdate)
     return;
+
+  //CALCULA O PROXIMO VALOR DE ATUALIZAÇÃO DO COMPASS
   NextUpdate = CompassTimer + COMPASS_UPDATE_FREQUENCY;
+
+  //REALIZA A LEITURA I2C DO COMPASS
   ReadBufferData();
 
   //APLICA O GANHO CALCULADO

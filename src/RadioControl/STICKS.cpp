@@ -23,12 +23,15 @@
 #include "RadioControl/RCCONFIG.h"
 #include "STATES.h"
 #include "Buzzer/BUZZER.h"
+#include "SafetyButton/SAFETYBUTTON.h"
 
 bool ArmDelay = false;
 uint8_t Arm_Delay_Count = 0;
 
 void RCSticks_Update()
 {
+  if (!SAFETYBUTTON.GetSafeStateToOutput())
+    return;
   if (!COMMAND_ARM_DISARM)
   {
     if ((ArmDisarmConfig == 0) && (StickStateToArm()) && (!BATTERY.LowBattPreventArm))

@@ -148,6 +148,7 @@ struct _SendUserBasicGCSParameters
     uint8_t SendAutomaticMissonType;
     uint8_t SendArmDisarmType;
     uint8_t SendAutoLandType;
+    uint8_t SendSafeBtnState;
 } SendUserBasicGCSParameters;
 
 struct _GetUserBasicGCSParameters
@@ -172,6 +173,7 @@ struct _GetUserBasicGCSParameters
     uint8_t GetAutomaticMissonType;
     uint8_t GetArmDisarmType;
     uint8_t GetAutoLandType;
+    uint8_t GetSafeBtnState;
 } GetUserBasicGCSParameters;
 
 struct _SendUserMediumGCSParameters
@@ -764,6 +766,9 @@ void GCSClass::Save_Basic_Configuration()
 
     if (GetUserBasicGCSParameters.GetAutoLandType != STORAGEMANAGER.Read_8Bits(AUTOLAND_ADDR))
         STORAGEMANAGER.Write_8Bits(AUTOLAND_ADDR, GetUserBasicGCSParameters.GetAutoLandType);
+
+    if (GetUserBasicGCSParameters.GetSafeBtnState != STORAGEMANAGER.Read_8Bits(SAFEBUTTON_ADDR))
+        STORAGEMANAGER.Write_8Bits(SAFEBUTTON_ADDR, GetUserBasicGCSParameters.GetSafeBtnState);
 }
 
 void GCSClass::Dafult_Basic_Configuration()
@@ -789,6 +794,7 @@ void GCSClass::Dafult_Basic_Configuration()
     STORAGEMANAGER.Write_8Bits(AUTOMISSION_ADDR, 0);      //LIMPA A CONFIGURAÇÃO DO MODO AUTO
     STORAGEMANAGER.Write_8Bits(ARMDISARM_ADDR, 0);        //LIMPA A CONFIGURAÇÃO DO ARMDISARM VIA CHAVE AUX
     STORAGEMANAGER.Write_8Bits(AUTOLAND_ADDR, 0);         //LIMPA A CONFIGURAÇÃO DO AUTO LAND
+    STORAGEMANAGER.Write_8Bits(SAFEBUTTON_ADDR, 0);       //LIMPA A CONFIGURAÇÃO DO SAFE BUTTON
 }
 
 void GCSClass::Save_Medium_Configuration()
@@ -942,6 +948,7 @@ void GCSClass::UpdateParametersToGCS()
     SendUserBasicGCSParameters.SendAutomaticMissonType = STORAGEMANAGER.Read_8Bits(AUTOMISSION_ADDR);
     SendUserBasicGCSParameters.SendArmDisarmType = STORAGEMANAGER.Read_8Bits(ARMDISARM_ADDR);
     SendUserBasicGCSParameters.SendAutoLandType = STORAGEMANAGER.Read_8Bits(AUTOLAND_ADDR);
+    SendUserBasicGCSParameters.SendSafeBtnState = STORAGEMANAGER.Read_8Bits(SAFEBUTTON_ADDR);
 
     //ENVIA OS PARAMETROS MEDIOS AJUSTAVEIS PELO USUARIO
     SendUserMediumGCSParameters.SendTPAInPercent = STORAGEMANAGER.Read_8Bits(815);

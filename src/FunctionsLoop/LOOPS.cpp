@@ -140,14 +140,16 @@ void Total_Loop()
 #endif
 
         RGB.Update();
+        SAFETYBUTTON.UpdateRoutine();
 #ifndef I2C_AND_SERIAL_500HZ
         SBUS_Update();
         IBUS_Update();
         Acc_ReadBufferData();
         Gyro_ReadBufferData();
-        GPS_Serial_Read();
         COMPASS.Constant_Read();
         Barometer_Update();
+        GPS_Serial_Read();
+        AHRS_Update();
 #endif
         DynamicPID();
         Auto_Launch_Update();

@@ -25,6 +25,7 @@
 #include "StorageManager/EEPROMSTORAGE.h"
 #include "Math/AVRMATH.h"
 #include "PIDMIXING.h"
+#include "SafetyButton/SAFETYBUTTON.h"
 
 //#define PWM_PINS_IN_ORDER
 
@@ -95,13 +96,17 @@ void ConfigureRegisters()
   TCCR5A |= _BV(COM4B1); //CONECTA O PINO 45 AO TIMER4 CANAL B
   //TCCR5A |= _BV(COM4C1); //CONECTA O PINO 44 AO TIMER4 CANAL C
 
-  if (!ESC.Run_Calibrate)
+  if (!ESC.Run_Calibrate && !SAFETYBUTTON.SafeButtonEnabled())
+  {
     PulseInAllMotors(1000);
-  AVRTIME.SchedulerSleep(300);
+    AVRTIME.SchedulerSleep(300);
+  }
 }
 
 void PIDMixMotors()
 {
+  if (!SAFETYBUTTON.GetSafeStateToOutput())
+    return;
   MixingSelectPID();
   Compesation_RPM_DropBatt(STORAGEMANAGER.Read_8Bits(832), NumberOfMotors);
   if (FrameType < 3 || FrameType == 6 || FrameType == 7)

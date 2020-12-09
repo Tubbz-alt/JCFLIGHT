@@ -15,23 +15,9 @@
   junto com a JCFLIGHT. Caso contrário, consulte <http://www.gnu.org/licenses/>.
 */
 
-#include "SPEED.h"
-#include "Common/VARIABLES.h"
-#include "StorageManager/EEPROMSTORAGE.h"
-#include "BAR/BAR.h"
-
-SPEEDCLASS SPEEDMOTORS;
-
-void SPEEDCLASS::LoadEEPROM()
-{
-    if (STORAGEMANAGER.Read_8Bits(MOTORSPEED_ADDR) == 0)
-        MotorSpeed = 1000;
-    else if (STORAGEMANAGER.Read_8Bits(MOTORSPEED_ADDR) == 1)
-        MotorSpeed = 1050;
-    else if (STORAGEMANAGER.Read_8Bits(MOTORSPEED_ADDR) == 2)
-        MotorSpeed = 1100;
-    else if (STORAGEMANAGER.Read_8Bits(MOTORSPEED_ADDR) == 3)
-        MotorSpeed = 1150;
-    else if (STORAGEMANAGER.Read_8Bits(MOTORSPEED_ADDR) == 4)
-        MotorSpeed = 1200;
-}
+#ifndef MACHINEMAIN_H_
+#define MACHINEMAIN_H_
+#include "Common/COMMON.h"
+void MachineInit();
+void MachineRun();
+#endif

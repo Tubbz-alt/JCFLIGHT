@@ -222,8 +222,8 @@ enum
   ADC11,
   ADC12,
   ADC13,
-  ADC14,
-  ADC15 //OFF (PPM INPUT)
+  ADC14, //OFF(SAFETY BUTTON)
+  ADC15  //OFF (PPM INPUT)
 };
 
 enum

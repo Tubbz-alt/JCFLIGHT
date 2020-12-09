@@ -25,8 +25,8 @@ int16_t AnalogPinClass::Read(uint8_t NumbAnalogPin)
   uint8_t HighByte;
   if (NumbAnalogPin >= 54)
     NumbAnalogPin -= 54;
-  //CONFIGURA O MUXB PARA O MEGA2560 (PARA LIBERAR OS PINOS ADC DE 8 - 15) (NÃO UTILIZADO NO MOMENTO)
-  //ADCSRB = (ADCSRB & ~(1 << MUX5)) | (((NumbAnalogPin >> 0x03) & 0x01) << MUX5);
+  //CONFIGURA O MUXB PARA O MEGA2560 (PINOS ADC DE 8 - 15)
+  (*(volatile uint8_t *)(0x7B)) = ((*(volatile uint8_t *)(0x7B)) & ~(1 << 3)) | (((NumbAnalogPin >> 0x03) & 0x01) << 3);
   (*(volatile uint8_t *)(0x7C)) = 64 | (NumbAnalogPin & 0x07);                   //ANALOG REFERENCE PADRÃO DE 5V
   (*(volatile uint8_t *)(((uint16_t) & ((*(volatile uint8_t *)(0x7A)))))) |= 64; //INICIA A CONVERSÃO (ADC)
   while (((*(volatile uint8_t *)(((uint16_t) & ((*(volatile uint8_t *)(0x7A)))))) & 64))
