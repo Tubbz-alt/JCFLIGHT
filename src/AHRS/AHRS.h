@@ -18,6 +18,9 @@
 #ifndef AHRS_H_
 #define AHRS_H_
 #include "Arduino.h"
+#include "VECTOR.h"
+extern Struct_Vector3x3 BodyFrameAcceleration;
+extern Struct_Vector3x3 BodyFrameRotation;
 void AHRS_Initialization();
 void AHRS_Update();
 bool CheckAnglesInclination(int16_t Angle);

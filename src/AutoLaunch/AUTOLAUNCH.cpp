@@ -26,15 +26,17 @@
 #include "Buzzer/BUZZER.h"
 #include "FastSerial/PRINTF.h"
 
-#define AHRS_BANKED_ANGLE 25               //25 GRAUS MAXIMO DE BANK ANGLE (CONSIDERANDO EM RADIANOS = 436)
-#define IMU_BANKED_ANGLE -450.0f           //-45 GRAUS DE INCLINAÇÃO NA IMU
-#define LAUNCH_MOTOR_IDLE_SPINUP_TIME 1500 //ARMA O MOTOR DEPOIS DE 1.5 SEGUNDO APÓS DETECTAR O AUTO-LAUNCH
-#define AUTO_LAUNCH_ANGLE 18               //VALOR DO PITCH (ELEVATOR) AO FAZER O AUTO-LAUNCH (VALOR EM GRAUS)
-#define MOTOR_SPINUP_VALUE 100             //VALOR DA INCREMENTAÇÃO DO THROTTLE PARA PLANES COM RODAS
-#define MOTOR_SPINUP_TIME 300              //VAI SUBINDO O THROTTLE AOS POUCOS,BOM PARA AERO COM RODAS (TEMPO EM MS)
-#define AUTO_LAUCH_EXIT_FUNCTION 5000      //TEMPO DE PARA SAIR DO MODO AUTO-LAUCH APÓS A DETECÇÃO (TEMPO EM MS)
-#define AUTO_LAUNCH_THROTTLE_MAX 1700      //VALOR MAXIMO DE ACELERAÇÃO
-#define AUTO_LAUCH_MAX_ALTITUDE 0          //ALTITUDE MAXIMA PARA VALIDAR O AUTO-LAUNCH (VALOR EM METROS)
+#define AHRS_BANKED_ANGLE 25                                 //25 GRAUS MAXIMO DE BANK ANGLE (CONSIDERANDO EM RADIANOS = 436)
+#define IMU_BANKED_ANGLE -450.0f                             //-45 GRAUS DE INCLINAÇÃO NA IMU
+#define LAUNCH_MOTOR_IDLE_SPINUP_TIME 1500                   //ARMA O MOTOR DEPOIS DE 1.5 SEGUNDO APÓS DETECTAR O AUTO-LAUNCH
+#define AUTO_LAUNCH_ANGLE 18                                 //VALOR DO PITCH (ELEVATOR) AO FAZER O AUTO-LAUNCH (VALOR EM GRAUS)
+#define SWING_LAUNCH_MIN_ROTATION_RATE ConvertToRadians(100) //NO MINIMO UM RATE DE 100DPS NO GYRO
+#define LAUNCH_VELOCITY_THRESH 300                           //3 METROS/S
+#define MOTOR_SPINUP_VALUE 100                               //VALOR DA INCREMENTAÇÃO DO THROTTLE PARA PLANES COM RODAS
+#define MOTOR_SPINUP_TIME 300                                //VAI SUBINDO O THROTTLE AOS POUCOS,BOM PARA AERO COM RODAS (TEMPO EM MS)
+#define AUTO_LAUCH_EXIT_FUNCTION 5000                        //TEMPO DE PARA SAIR DO MODO AUTO-LAUCH APÓS A DETECÇÃO (TEMPO EM MS)
+#define AUTO_LAUNCH_THROTTLE_MAX 1700                        //VALOR MAXIMO DE ACELERAÇÃO
+#define AUTO_LAUCH_MAX_ALTITUDE 0                            //ALTITUDE MAXIMA PARA VALIDAR O AUTO-LAUNCH (VALOR EM METROS)
 
 bool PlaneType = 0; //ADICIONAR AO GCS
 bool AutoLaunchState = false;
@@ -54,14 +56,21 @@ enum
   WITH_WHEELS
 };
 
-float GetPitchAccelerationInMSS()
+const float GetPitchAccelerationInMSS()
 {
-  return (((float)IMU.AccelerometerRead[PITCH] / 512) * 980.665f);
+  return BodyFrameAcceleration.Pitch;
+}
+
+const bool GetSwingVelocityState()
+{
+  const float SwingVelocity = (ABS_FLOAT(BodyFrameRotation.Yaw) * 10 > SWING_LAUNCH_MIN_ROTATION_RATE) ? (BodyFrameAcceleration.Pitch / BodyFrameRotation.Yaw) : 0;
+  return (SwingVelocity > LAUNCH_VELOCITY_THRESH) && (BodyFrameAcceleration.Roll > 0);
 }
 
 void AutoLaunchDetector()
 {
-  if (GetIMUAngleBanked(GetPitchAccelerationInMSS(), CheckAnglesInclination(AHRS_BANKED_ANGLE)))
+  if (GetIMUAngleBanked(GetPitchAccelerationInMSS(), CheckAnglesInclination(AHRS_BANKED_ANGLE)) ||
+      GetSwingVelocityState())
   {
     AutoLaunchDetectorSum += (AVRTIME.SchedulerMillis() - AutoLaunchDetectorPreviousTime);
     AutoLaunchDetectorPreviousTime = AVRTIME.SchedulerMillis();

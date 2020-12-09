@@ -142,6 +142,8 @@ void SAFETYBUTTONCLASS::SetStateToLed(bool State)
 
 bool SAFETYBUTTONCLASS::GetSafeStateToOutput()
 {
+    if (!SafeButtonEnabled())
+        return true;
     return SafeStateToApplyPulse;
 }
 

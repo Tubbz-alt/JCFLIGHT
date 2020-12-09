@@ -26,7 +26,6 @@
 #include "I2C/I2C.h"
 #include "BAR/BAR.h"
 #include "Yaw/YAWMANIPULATION.h"
-#include "VECTOR.h"
 #include "QUATERNION.h"
 
 #define SPIN_RATE_LIMIT 20     //VALOR DE GYRO^2 PARA CORTAR A CORREÇÃO DO INTEGRAL NO AHRS
