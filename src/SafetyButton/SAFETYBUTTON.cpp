@@ -132,11 +132,11 @@ void SAFETYBUTTONCLASS::SetStateToLed(bool State)
 {
     if (!State)
     {
-        PORTA |= 1 << 3; //ATIVA O LED DO SAFE BUTTON
+        PORTA |= 1 << 3; //DESATIVA O LED DO SAFE BUTTON
     }
     else
     {
-        PORTA &= ~(1 << 3); //DESATIVA O LED DO SAFE BUTTON
+        PORTA &= ~(1 << 3); //ATIVA O LED DO SAFE BUTTON
     }
 }
 
