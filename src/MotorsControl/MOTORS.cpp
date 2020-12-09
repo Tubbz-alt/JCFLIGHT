@@ -26,6 +26,7 @@
 #include "Math/AVRMATH.h"
 #include "PIDMIXING.h"
 #include "SafetyButton/SAFETYBUTTON.h"
+#include "BAR/BAR.h"
 
 //#define PWM_PINS_IN_ORDER
 
