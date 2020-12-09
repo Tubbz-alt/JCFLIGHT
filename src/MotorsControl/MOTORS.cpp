@@ -108,7 +108,7 @@ void PIDMixMotors()
   if (!SAFETYBUTTON.GetSafeStateToOutput())
     return;
   MixingSelectPID();
-  Compesation_RPM_DropBatt(STORAGEMANAGER.Read_8Bits(832), NumberOfMotors);
+  Compesation_RPM_DropBatt(STORAGEMANAGER.Read_8Bits(MOTCOMP_STATE_ADDR), NumberOfMotors);
   if (FrameType < 3 || FrameType == 6 || FrameType == 7)
   {
     int16_t SuportMotor = MotorControl[MOTOR1];

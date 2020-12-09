@@ -799,38 +799,38 @@ void GCSClass::Dafult_Basic_Configuration()
 
 void GCSClass::Save_Medium_Configuration()
 {
-    if (GetUserMediumGCSParameters.GetTPAInPercent != STORAGEMANAGER.Read_8Bits(815))
-        STORAGEMANAGER.Write_8Bits(815, GetUserMediumGCSParameters.GetTPAInPercent);
+    if (GetUserMediumGCSParameters.GetTPAInPercent != STORAGEMANAGER.Read_8Bits(TPA_PERCENT_ADDR))
+        STORAGEMANAGER.Write_8Bits(TPA_PERCENT_ADDR, GetUserMediumGCSParameters.GetTPAInPercent);
 
-    if (GetUserMediumGCSParameters.GetBreakPointValue != STORAGEMANAGER.Read_16Bits(830))
-        STORAGEMANAGER.Write_16Bits(830, GetUserMediumGCSParameters.GetBreakPointValue);
+    if (GetUserMediumGCSParameters.GetBreakPointValue != STORAGEMANAGER.Read_16Bits(BREAKPOINT_ADDR))
+        STORAGEMANAGER.Write_16Bits(BREAKPOINT_ADDR, GetUserMediumGCSParameters.GetBreakPointValue);
 
-    if (GetUserMediumGCSParameters.GetGyroLPF != STORAGEMANAGER.Read_8Bits(816))
-        STORAGEMANAGER.Write_8Bits(816, GetUserMediumGCSParameters.GetGyroLPF);
+    if (GetUserMediumGCSParameters.GetGyroLPF != STORAGEMANAGER.Read_8Bits(GYRO_LPF_ADDR))
+        STORAGEMANAGER.Write_8Bits(GYRO_LPF_ADDR, GetUserMediumGCSParameters.GetGyroLPF);
 
-    if (GetUserMediumGCSParameters.GetDerivativeLPF != STORAGEMANAGER.Read_16Bits(817))
-        STORAGEMANAGER.Write_16Bits(817, GetUserMediumGCSParameters.GetDerivativeLPF);
+    if (GetUserMediumGCSParameters.GetDerivativeLPF != STORAGEMANAGER.Read_16Bits(DERIVATIVE_LPF_ADDR))
+        STORAGEMANAGER.Write_16Bits(DERIVATIVE_LPF_ADDR, GetUserMediumGCSParameters.GetDerivativeLPF);
 
-    if (GetUserMediumGCSParameters.GetRCLPF != STORAGEMANAGER.Read_16Bits(819))
-        STORAGEMANAGER.Write_16Bits(819, GetUserMediumGCSParameters.GetRCLPF);
+    if (GetUserMediumGCSParameters.GetRCLPF != STORAGEMANAGER.Read_16Bits(RC_LPF_ADDR))
+        STORAGEMANAGER.Write_16Bits(RC_LPF_ADDR, GetUserMediumGCSParameters.GetRCLPF);
 
-    if (GetUserMediumGCSParameters.GetKalmanState != STORAGEMANAGER.Read_8Bits(821))
-        STORAGEMANAGER.Write_8Bits(821, GetUserMediumGCSParameters.GetKalmanState);
+    if (GetUserMediumGCSParameters.GetKalmanState != STORAGEMANAGER.Read_8Bits(KALMAN_ADDR))
+        STORAGEMANAGER.Write_8Bits(KALMAN_ADDR, GetUserMediumGCSParameters.GetKalmanState);
 
-    if (GetUserMediumGCSParameters.GetBiquadAccLPF != STORAGEMANAGER.Read_16Bits(822))
-        STORAGEMANAGER.Write_16Bits(822, GetUserMediumGCSParameters.GetBiquadAccLPF);
+    if (GetUserMediumGCSParameters.GetBiquadAccLPF != STORAGEMANAGER.Read_16Bits(BI_ACC_LPF_ADDR))
+        STORAGEMANAGER.Write_16Bits(BI_ACC_LPF_ADDR, GetUserMediumGCSParameters.GetBiquadAccLPF);
 
-    if (GetUserMediumGCSParameters.GetBiquadGyroLPF != STORAGEMANAGER.Read_16Bits(824))
-        STORAGEMANAGER.Write_16Bits(824, GetUserMediumGCSParameters.GetBiquadGyroLPF);
+    if (GetUserMediumGCSParameters.GetBiquadGyroLPF != STORAGEMANAGER.Read_16Bits(BI_GYRO_LPF_ADDR))
+        STORAGEMANAGER.Write_16Bits(BI_GYRO_LPF_ADDR, GetUserMediumGCSParameters.GetBiquadGyroLPF);
 
-    if (GetUserMediumGCSParameters.GetBiquadAccNotch != STORAGEMANAGER.Read_16Bits(826))
-        STORAGEMANAGER.Write_16Bits(826, GetUserMediumGCSParameters.GetBiquadAccNotch);
+    if (GetUserMediumGCSParameters.GetBiquadAccNotch != STORAGEMANAGER.Read_16Bits(BI_ACC_NOTCH_ADDR))
+        STORAGEMANAGER.Write_16Bits(BI_ACC_NOTCH_ADDR, GetUserMediumGCSParameters.GetBiquadAccNotch);
 
-    if (GetUserMediumGCSParameters.GetBiquadGyroNotch != STORAGEMANAGER.Read_16Bits(828))
-        STORAGEMANAGER.Write_16Bits(828, GetUserMediumGCSParameters.GetBiquadGyroNotch);
+    if (GetUserMediumGCSParameters.GetBiquadGyroNotch != STORAGEMANAGER.Read_16Bits(BI_GYRO_NOTCH_ADDR))
+        STORAGEMANAGER.Write_16Bits(BI_GYRO_NOTCH_ADDR, GetUserMediumGCSParameters.GetBiquadGyroNotch);
 
-    if (GetUserMediumGCSParameters.GetMotorCompensationState != STORAGEMANAGER.Read_8Bits(832))
-        STORAGEMANAGER.Write_8Bits(832, GetUserMediumGCSParameters.GetMotorCompensationState);
+    if (GetUserMediumGCSParameters.GetMotorCompensationState != STORAGEMANAGER.Read_8Bits(MOTCOMP_STATE_ADDR))
+        STORAGEMANAGER.Write_8Bits(MOTCOMP_STATE_ADDR, GetUserMediumGCSParameters.GetMotorCompensationState);
 
     PID[PITCH].ProportionalVector = GetUserMediumGCSParameters.GetProportionalPitch;
     PID[PITCH].IntegratorVector = GetUserMediumGCSParameters.GetIntegralPitch;
@@ -849,41 +849,41 @@ void GCSClass::Save_Medium_Configuration()
     PID[PIDGPSPOSITION].ProportionalVector = GetUserMediumGCSParameters.GetProportionalGPSHold;
     PID[PIDGPSPOSITION].IntegratorVector = GetUserMediumGCSParameters.GetIntegralGPSHold;
 
-    if (STORAGEMANAGER.Read_8Bits(903) != PID[PITCH].ProportionalVector)
-        STORAGEMANAGER.Write_8Bits(903, PID[PITCH].ProportionalVector);
+    if (STORAGEMANAGER.Read_8Bits(KP_PITCH_ADDR) != PID[PITCH].ProportionalVector)
+        STORAGEMANAGER.Write_8Bits(KP_PITCH_ADDR, PID[PITCH].ProportionalVector);
 
-    if (STORAGEMANAGER.Read_8Bits(904) != PID[PITCH].IntegratorVector)
-        STORAGEMANAGER.Write_8Bits(904, PID[PITCH].IntegratorVector);
+    if (STORAGEMANAGER.Read_8Bits(KI_PITCH_ADDR) != PID[PITCH].IntegratorVector)
+        STORAGEMANAGER.Write_8Bits(KI_PITCH_ADDR, PID[PITCH].IntegratorVector);
 
-    if (STORAGEMANAGER.Read_8Bits(905) != PID[PITCH].DerivativeVector)
-        STORAGEMANAGER.Write_8Bits(905, PID[PITCH].DerivativeVector);
+    if (STORAGEMANAGER.Read_8Bits(KD_PITCH_ADDR) != PID[PITCH].DerivativeVector)
+        STORAGEMANAGER.Write_8Bits(KD_PITCH_ADDR, PID[PITCH].DerivativeVector);
 
-    if (STORAGEMANAGER.Read_8Bits(900) != PID[ROLL].ProportionalVector)
-        STORAGEMANAGER.Write_8Bits(900, PID[ROLL].ProportionalVector);
+    if (STORAGEMANAGER.Read_8Bits(KP_ROLL_ADDR) != PID[ROLL].ProportionalVector)
+        STORAGEMANAGER.Write_8Bits(KP_ROLL_ADDR, PID[ROLL].ProportionalVector);
 
-    if (STORAGEMANAGER.Read_8Bits(901) != PID[ROLL].IntegratorVector)
-        STORAGEMANAGER.Write_8Bits(901, PID[ROLL].IntegratorVector);
+    if (STORAGEMANAGER.Read_8Bits(KI_ROLL_ADDR) != PID[ROLL].IntegratorVector)
+        STORAGEMANAGER.Write_8Bits(KI_ROLL_ADDR, PID[ROLL].IntegratorVector);
 
-    if (STORAGEMANAGER.Read_8Bits(902) != PID[ROLL].DerivativeVector)
-        STORAGEMANAGER.Write_8Bits(902, PID[ROLL].DerivativeVector);
+    if (STORAGEMANAGER.Read_8Bits(KD_ROLL_ADDR) != PID[ROLL].DerivativeVector)
+        STORAGEMANAGER.Write_8Bits(KD_ROLL_ADDR, PID[ROLL].DerivativeVector);
 
-    if (STORAGEMANAGER.Read_8Bits(906) != PID[YAW].ProportionalVector)
-        STORAGEMANAGER.Write_8Bits(906, PID[YAW].ProportionalVector);
+    if (STORAGEMANAGER.Read_8Bits(KP_YAW_ADDR) != PID[YAW].ProportionalVector)
+        STORAGEMANAGER.Write_8Bits(KP_YAW_ADDR, PID[YAW].ProportionalVector);
 
-    if (STORAGEMANAGER.Read_8Bits(907) != PID[YAW].IntegratorVector)
-        STORAGEMANAGER.Write_8Bits(907, PID[YAW].IntegratorVector);
+    if (STORAGEMANAGER.Read_8Bits(KI_YAW_ADDR) != PID[YAW].IntegratorVector)
+        STORAGEMANAGER.Write_8Bits(KI_YAW_ADDR, PID[YAW].IntegratorVector);
 
-    if (STORAGEMANAGER.Read_8Bits(908) != PID[YAW].DerivativeVector)
-        STORAGEMANAGER.Write_8Bits(908, PID[YAW].DerivativeVector);
+    if (STORAGEMANAGER.Read_8Bits(KD_YAW_ADDR) != PID[YAW].DerivativeVector)
+        STORAGEMANAGER.Write_8Bits(KD_YAW_ADDR, PID[YAW].DerivativeVector);
 
-    if (STORAGEMANAGER.Read_8Bits(909) != PID[PIDALTITUDE].ProportionalVector)
-        STORAGEMANAGER.Write_8Bits(909, PID[PIDALTITUDE].ProportionalVector);
+    if (STORAGEMANAGER.Read_8Bits(KP_ALTITUDE_ADDR) != PID[PIDALTITUDE].ProportionalVector)
+        STORAGEMANAGER.Write_8Bits(KP_ALTITUDE_ADDR, PID[PIDALTITUDE].ProportionalVector);
 
-    if (STORAGEMANAGER.Read_8Bits(910) != PID[PIDGPSPOSITION].ProportionalVector)
-        STORAGEMANAGER.Write_8Bits(910, PID[PIDGPSPOSITION].ProportionalVector);
+    if (STORAGEMANAGER.Read_8Bits(KP_GPSPOS_ADDR) != PID[PIDGPSPOSITION].ProportionalVector)
+        STORAGEMANAGER.Write_8Bits(KP_GPSPOS_ADDR, PID[PIDGPSPOSITION].ProportionalVector);
 
-    if (STORAGEMANAGER.Read_8Bits(911) != PID[PIDGPSPOSITION].IntegratorVector)
-        STORAGEMANAGER.Write_8Bits(911, PID[PIDGPSPOSITION].IntegratorVector);
+    if (STORAGEMANAGER.Read_8Bits(KI_GPSPOS_ADDR) != PID[PIDGPSPOSITION].IntegratorVector)
+        STORAGEMANAGER.Write_8Bits(KI_GPSPOS_ADDR, PID[PIDGPSPOSITION].IntegratorVector);
 
     //ATUALIZA OS PARAMETROS
     GCS.UpdatePID = false;
@@ -892,35 +892,35 @@ void GCSClass::Save_Medium_Configuration()
 void GCSClass::Dafult_Medium_Configuration()
 {
     //LIMPA AS CONFIGURAÇÕES SALVAS
-    STORAGEMANAGER.Write_16Bits(830, 1500); //VOLTA O BREAK-POINT AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_8Bits(815, 0);     //VOLTA O DYNAMICPID AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_8Bits(816, 0);     //VOLTA O GYROLPF AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_16Bits(817, 40);   //VOLTA O DERIVATIVELPF AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_16Bits(819, 50);   //VOLTA O RCSMOOTH AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_8Bits(821, 0);     //VOLTA O KALMANSTATE AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_16Bits(822, 15);   //VOLTA O ACCLPF AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_16Bits(824, 60);   //VOLTA O GYROLPF AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_16Bits(826, 0);    //VOLTA O ACCNOTCH AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_16Bits(828, 0);    //VOLTA O GYRONOTCH AO PADRÃO DE FABRICA
-    STORAGEMANAGER.Write_8Bits(832, 0);     //VOLTA O COMPENSATION SPEED AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(BREAKPOINT_ADDR, 1500);   //VOLTA O BREAK-POINT AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_8Bits(TPA_PERCENT_ADDR, 0);      //VOLTA O DYNAMICPID AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_8Bits(GYRO_LPF_ADDR, 0);         //VOLTA O GYROLPF AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(DERIVATIVE_LPF_ADDR, 40); //VOLTA O DERIVATIVELPF AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(RC_LPF_ADDR, 50);         //VOLTA O RCSMOOTH AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_8Bits(KALMAN_ADDR, 0);           //VOLTA O KALMANSTATE AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(BI_ACC_LPF_ADDR, 15);     //VOLTA O ACCLPF AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(BI_GYRO_LPF_ADDR, 60);    //VOLTA O GYROLPF AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(BI_ACC_NOTCH_ADDR, 0);    //VOLTA O ACCNOTCH AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_16Bits(BI_GYRO_NOTCH_ADDR, 0);   //VOLTA O GYRONOTCH AO PADRÃO DE FABRICA
+    STORAGEMANAGER.Write_8Bits(MOTCOMP_STATE_ADDR, 0);    //VOLTA O COMPENSATION SPEED AO PADRÃO DE FABRICA
     //VOLTA TODO O PID PARA O PADRÃO DE FABRICA
     //PITCH
-    STORAGEMANAGER.Write_8Bits(900, 35);
-    STORAGEMANAGER.Write_8Bits(901, 25);
-    STORAGEMANAGER.Write_8Bits(902, 26);
+    STORAGEMANAGER.Write_8Bits(KP_PITCH_ADDR, 35);
+    STORAGEMANAGER.Write_8Bits(KI_PITCH_ADDR, 25);
+    STORAGEMANAGER.Write_8Bits(KD_PITCH_ADDR, 26);
     //ROLL
-    STORAGEMANAGER.Write_8Bits(903, 35);
-    STORAGEMANAGER.Write_8Bits(904, 25);
-    STORAGEMANAGER.Write_8Bits(905, 26);
+    STORAGEMANAGER.Write_8Bits(KP_ROLL_ADDR, 35);
+    STORAGEMANAGER.Write_8Bits(KD_ROLL_ADDR, 25);
+    STORAGEMANAGER.Write_8Bits(KI_ROLL_ADDR, 26);
     //YAW
-    STORAGEMANAGER.Write_8Bits(906, 69);
-    STORAGEMANAGER.Write_8Bits(907, 50);
-    STORAGEMANAGER.Write_8Bits(908, 0);
+    STORAGEMANAGER.Write_8Bits(KP_YAW_ADDR, 69);
+    STORAGEMANAGER.Write_8Bits(KI_YAW_ADDR, 50);
+    STORAGEMANAGER.Write_8Bits(KD_YAW_ADDR, 0);
     //ALTITUDE-HOLD
-    STORAGEMANAGER.Write_8Bits(909, 50);
+    STORAGEMANAGER.Write_8Bits(KP_ALTITUDE_ADDR, 50);
     //GPS-HOLD
-    STORAGEMANAGER.Write_8Bits(910, 100);
-    STORAGEMANAGER.Write_8Bits(911, 90);
+    STORAGEMANAGER.Write_8Bits(KP_GPSPOS_ADDR, 100);
+    STORAGEMANAGER.Write_8Bits(KI_GPSPOS_ADDR, 90);
     //ATUALIZA OS PARAMETROS
     GCS.UpdatePID = false;
 }
@@ -951,27 +951,27 @@ void GCSClass::UpdateParametersToGCS()
     SendUserBasicGCSParameters.SendSafeBtnState = STORAGEMANAGER.Read_8Bits(SAFEBUTTON_ADDR);
 
     //ENVIA OS PARAMETROS MEDIOS AJUSTAVEIS PELO USUARIO
-    SendUserMediumGCSParameters.SendTPAInPercent = STORAGEMANAGER.Read_8Bits(815);
-    SendUserMediumGCSParameters.SendBreakPointValue = STORAGEMANAGER.Read_16Bits(830);
-    SendUserMediumGCSParameters.SendGyroLPF = STORAGEMANAGER.Read_8Bits(816);
-    SendUserMediumGCSParameters.SendDerivativeLPF = STORAGEMANAGER.Read_16Bits(817);
-    SendUserMediumGCSParameters.SendRCLPF = STORAGEMANAGER.Read_16Bits(819);
-    SendUserMediumGCSParameters.SendKalmanState = STORAGEMANAGER.Read_8Bits(821);
-    SendUserMediumGCSParameters.SendPT1AccLPF = STORAGEMANAGER.Read_16Bits(822);
-    SendUserMediumGCSParameters.SendPT1GyroLPF = STORAGEMANAGER.Read_16Bits(824);
-    SendUserMediumGCSParameters.SendAccNotch = STORAGEMANAGER.Read_16Bits(826);
-    SendUserMediumGCSParameters.SendGyroNotch = STORAGEMANAGER.Read_16Bits(828);
-    SendUserMediumGCSParameters.SendMotorCompensationState = STORAGEMANAGER.Read_8Bits(832);
-    SendUserMediumGCSParameters.SendProportionalPitch = STORAGEMANAGER.Read_8Bits(903);
-    SendUserMediumGCSParameters.SendIntegralPitch = STORAGEMANAGER.Read_8Bits(904);
-    SendUserMediumGCSParameters.SendDerivativePitch = STORAGEMANAGER.Read_8Bits(905);
-    SendUserMediumGCSParameters.SendProportionalRoll = STORAGEMANAGER.Read_8Bits(900);
-    SendUserMediumGCSParameters.SendIntegralRoll = STORAGEMANAGER.Read_8Bits(901);
-    SendUserMediumGCSParameters.SendDerivativeRoll = STORAGEMANAGER.Read_8Bits(902);
-    SendUserMediumGCSParameters.SendProportionalYaw = STORAGEMANAGER.Read_8Bits(906);
-    SendUserMediumGCSParameters.SendIntegralYaw = STORAGEMANAGER.Read_8Bits(907);
-    SendUserMediumGCSParameters.SendDerivativeYaw = STORAGEMANAGER.Read_8Bits(908);
-    SendUserMediumGCSParameters.SendProportionalAltitudeHold = STORAGEMANAGER.Read_8Bits(909);
-    SendUserMediumGCSParameters.SendProportionalGPSHold = STORAGEMANAGER.Read_8Bits(910);
-    SendUserMediumGCSParameters.SendIntegralGPSHold = STORAGEMANAGER.Read_8Bits(911);
+    SendUserMediumGCSParameters.SendTPAInPercent = STORAGEMANAGER.Read_8Bits(TPA_PERCENT_ADDR);
+    SendUserMediumGCSParameters.SendBreakPointValue = STORAGEMANAGER.Read_16Bits(BREAKPOINT_ADDR);
+    SendUserMediumGCSParameters.SendGyroLPF = STORAGEMANAGER.Read_8Bits(GYRO_LPF_ADDR);
+    SendUserMediumGCSParameters.SendDerivativeLPF = STORAGEMANAGER.Read_16Bits(DERIVATIVE_LPF_ADDR);
+    SendUserMediumGCSParameters.SendRCLPF = STORAGEMANAGER.Read_16Bits(RC_LPF_ADDR);
+    SendUserMediumGCSParameters.SendKalmanState = STORAGEMANAGER.Read_8Bits(KALMAN_ADDR);
+    SendUserMediumGCSParameters.SendPT1AccLPF = STORAGEMANAGER.Read_16Bits(BI_ACC_LPF_ADDR);
+    SendUserMediumGCSParameters.SendPT1GyroLPF = STORAGEMANAGER.Read_16Bits(BI_GYRO_LPF_ADDR);
+    SendUserMediumGCSParameters.SendAccNotch = STORAGEMANAGER.Read_16Bits(BI_ACC_NOTCH_ADDR);
+    SendUserMediumGCSParameters.SendGyroNotch = STORAGEMANAGER.Read_16Bits(BI_GYRO_NOTCH_ADDR);
+    SendUserMediumGCSParameters.SendMotorCompensationState = STORAGEMANAGER.Read_8Bits(MOTCOMP_STATE_ADDR);
+    SendUserMediumGCSParameters.SendProportionalPitch = STORAGEMANAGER.Read_8Bits(KP_PITCH_ADDR);
+    SendUserMediumGCSParameters.SendIntegralPitch = STORAGEMANAGER.Read_8Bits(KI_PITCH_ADDR);
+    SendUserMediumGCSParameters.SendDerivativePitch = STORAGEMANAGER.Read_8Bits(KD_PITCH_ADDR);
+    SendUserMediumGCSParameters.SendProportionalRoll = STORAGEMANAGER.Read_8Bits(KP_ROLL_ADDR);
+    SendUserMediumGCSParameters.SendIntegralRoll = STORAGEMANAGER.Read_8Bits(KI_ROLL_ADDR);
+    SendUserMediumGCSParameters.SendDerivativeRoll = STORAGEMANAGER.Read_8Bits(KD_ROLL_ADDR);
+    SendUserMediumGCSParameters.SendProportionalYaw = STORAGEMANAGER.Read_8Bits(KP_YAW_ADDR);
+    SendUserMediumGCSParameters.SendIntegralYaw = STORAGEMANAGER.Read_8Bits(KI_YAW_ADDR);
+    SendUserMediumGCSParameters.SendDerivativeYaw = STORAGEMANAGER.Read_8Bits(KD_YAW_ADDR);
+    SendUserMediumGCSParameters.SendProportionalAltitudeHold = STORAGEMANAGER.Read_8Bits(KP_ALTITUDE_ADDR);
+    SendUserMediumGCSParameters.SendProportionalGPSHold = STORAGEMANAGER.Read_8Bits(KP_GPSPOS_ADDR);
+    SendUserMediumGCSParameters.SendIntegralGPSHold = STORAGEMANAGER.Read_8Bits(KI_GPSPOS_ADDR);
 }

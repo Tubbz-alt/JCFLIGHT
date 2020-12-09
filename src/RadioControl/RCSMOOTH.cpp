@@ -22,6 +22,7 @@
 #include "Scheduler/SCHEDULERTIME.h"
 #include "FastSerial/PRINTF.h"
 #include "Filters/LPFSERVO.h"
+#include "BAR/BAR.h"
 
 //DEBUG
 //#define PRINTLN_RC_INTERPOLATION
@@ -33,7 +34,7 @@ int16_t DevicesFiltered[4];
 void RCInterpolationApply()
 {
 
-  int16_t RCFilterFrequencyEEPROM = STORAGEMANAGER.Read_16Bits(819);
+  int16_t RCFilterFrequencyEEPROM = STORAGEMANAGER.Read_16Bits(RC_LPF_ADDR);
 
   //GUARDA OS VALORES ANTERIOR
   RCControllerUnFiltered[THROTTLE] = RCController[THROTTLE];

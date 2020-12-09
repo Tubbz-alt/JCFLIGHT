@@ -19,6 +19,7 @@
 #include "Common/VARIABLES.h"
 #include "StorageManager/EEPROMSTORAGE.h"
 #include "Math/AVRMATH.h"
+#include "BAR/BAR.h"
 
 int16_t ThrottleIdleValue = 0;
 
@@ -31,16 +32,16 @@ struct
 
 void TPA_Initialization()
 {
-  if (STORAGEMANAGER.Read_16Bits(830) < 1000)
-    STORAGEMANAGER.Write_16Bits(830, 1000); //AQUI NÃO PODE SER MENOR QUE 1000
-  TPA_Parameters.TPABreakPointer = STORAGEMANAGER.Read_16Bits(830);
+  if (STORAGEMANAGER.Read_16Bits(BREAKPOINT_ADDR) < 1000)
+    STORAGEMANAGER.Write_16Bits(BREAKPOINT_ADDR, 1000); //AQUI NÃO PODE SER MENOR QUE 1000
+  TPA_Parameters.TPABreakPointer = STORAGEMANAGER.Read_16Bits(BREAKPOINT_ADDR);
 }
 
 void TPA_Update()
 {
-  if (STORAGEMANAGER.Read_16Bits(830) != TPA_Parameters.TPABreakPointer)
+  if (STORAGEMANAGER.Read_16Bits(BREAKPOINT_ADDR) != TPA_Parameters.TPABreakPointer)
   {
-    TPA_Parameters.TPABreakPointer = STORAGEMANAGER.Read_16Bits(830);
+    TPA_Parameters.TPABreakPointer = STORAGEMANAGER.Read_16Bits(BREAKPOINT_ADDR);
   }
 }
 

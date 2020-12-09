@@ -25,6 +25,7 @@
 #include "Math/AVRMATH.h"
 #include "Filters/PT1.h"
 #include "Compass/COMPASSREAD.h"
+#include "BAR/BAR.h"
 
 #define ACTUAL_MACHINE_CYCLE 2000 //2uS - 500HZ
 
@@ -65,16 +66,16 @@ static void GyroFilterLPF_Initialization(FilterApplyFnPTR *ApplyFn, PT1Filter_St
 void IMU_Filters_Initialization()
 {
   //CARREGA O VALOR GUARDADO DO ESTADO DO KALMAN
-  if (STORAGEMANAGER.Read_8Bits(821) == 0)
+  if (STORAGEMANAGER.Read_8Bits(KALMAN_ADDR) == 0)
     ActiveKalman = false;
   else
     ActiveKalman = true;
   //CARREGA OS VALORES GUARDADOS DO LPF
-  Acc_LPF = STORAGEMANAGER.Read_16Bits(822);
-  Gyro_LPF = STORAGEMANAGER.Read_16Bits(824);
+  Acc_LPF = STORAGEMANAGER.Read_16Bits(BI_ACC_LPF_ADDR);
+  Gyro_LPF = STORAGEMANAGER.Read_16Bits(BI_GYRO_LPF_ADDR);
   //CARREGA OS VALORES GUARDADOS DO NOTCH
-  Acc_Notch = STORAGEMANAGER.Read_16Bits(826);
-  Gyro_Notch = STORAGEMANAGER.Read_16Bits(828);
+  Acc_Notch = STORAGEMANAGER.Read_16Bits(BI_ACC_NOTCH_ADDR);
+  Gyro_Notch = STORAGEMANAGER.Read_16Bits(BI_GYRO_NOTCH_ADDR);
   //GERA UM COEFICIENTE PARA O LPF DO ACELEROMETRO
   AccFilterLPF_Initialization(&AccelerometerLPFApplyFn, AccelerometerLPFState, Acc_LPF);
   //GERA UM COEFICIENTE PARA O LPF DO GYROSCOPIO
@@ -84,16 +85,16 @@ void IMU_Filters_Initialization()
 void IMU_Filters_Update()
 {
   //ATUALIZA O VALOR GUARDADO DO ESTADO DO KALMAN
-  if (STORAGEMANAGER.Read_8Bits(821) == 0)
+  if (STORAGEMANAGER.Read_8Bits(KALMAN_ADDR) == 0)
     ActiveKalman = false;
   else
     ActiveKalman = true;
   //ATUALIZA OS VALORES GUARDADOS DO LPF
-  Acc_LPFStoredInEEPROM = STORAGEMANAGER.Read_16Bits(822);
-  Gyro_LPFStoredInEEPROM = STORAGEMANAGER.Read_16Bits(824);
+  Acc_LPFStoredInEEPROM = STORAGEMANAGER.Read_16Bits(BI_ACC_LPF_ADDR);
+  Gyro_LPFStoredInEEPROM = STORAGEMANAGER.Read_16Bits(BI_GYRO_LPF_ADDR);
   //ATUALIZA OS VALORES GUARDADOS DO NOTCH
-  Acc_NotchStoredInEEPROM = STORAGEMANAGER.Read_16Bits(826);
-  Gyro_NotchStoredInEEPROM = STORAGEMANAGER.Read_16Bits(828);
+  Acc_NotchStoredInEEPROM = STORAGEMANAGER.Read_16Bits(BI_ACC_NOTCH_ADDR);
+  Gyro_NotchStoredInEEPROM = STORAGEMANAGER.Read_16Bits(BI_GYRO_NOTCH_ADDR);
   //SE NECESSARIO GERA UM NOVO COEFICIENTE PARA O LPF NO ACC
   if (Acc_LPFStoredInEEPROM != Acc_LPF)
   {
@@ -139,7 +140,7 @@ void Gyro_Initialization()
   I2C.WriteRegister(0x68, 0x6B, 0x80);
   AVRTIME.SchedulerSleep(50);
   I2C.WriteRegister(0x68, 0x6B, 0x03);
-  GyroLPF = STORAGEMANAGER.Read_8Bits(816);
+  GyroLPF = STORAGEMANAGER.Read_8Bits(GYRO_LPF_ADDR);
   switch (GyroLPF)
   {
 

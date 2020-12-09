@@ -46,14 +46,14 @@ uint32_t PID_Guard_Time = 0;
 
 void DerivativeLPF_Initialization()
 {
-  Value_LPF_Derivative = STORAGEMANAGER.Read_16Bits(817);
+  Value_LPF_Derivative = STORAGEMANAGER.Read_16Bits(DERIVATIVE_LPF_ADDR);
 }
 
 void DerivativeLPF_Update()
 {
-  if (STORAGEMANAGER.Read_16Bits(817) != Value_LPF_Derivative)
+  if (STORAGEMANAGER.Read_16Bits(DERIVATIVE_LPF_ADDR) != Value_LPF_Derivative)
   {
-    Value_LPF_Derivative = STORAGEMANAGER.Read_16Bits(817);
+    Value_LPF_Derivative = STORAGEMANAGER.Read_16Bits(DERIVATIVE_LPF_ADDR);
   }
 }
 

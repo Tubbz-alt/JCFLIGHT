@@ -50,12 +50,12 @@ void CurvesRC_Update()
       (STORAGEMANAGER.Read_8Bits(FRAMETYPE_ADDR) == 6) ||
       (STORAGEMANAGER.Read_8Bits(FRAMETYPE_ADDR) == 7)) //MULTIROTORES
   {
-    DynamicThrottlePID = STORAGEMANAGER.Read_8Bits(815);
+    DynamicThrottlePID = STORAGEMANAGER.Read_8Bits(TPA_PERCENT_ADDR);
     RCExpo = 60;
   }
   else //PARA PLANES
   {
-    DynamicThrottlePID = STORAGEMANAGER.Read_8Bits(815); //50 (PADRÃO BETAFLIGHT & CLEANFLIGHT),90 (PADRÃO INAV)
+    DynamicThrottlePID = STORAGEMANAGER.Read_8Bits(TPA_PERCENT_ADDR); //50 (PADRÃO BETAFLIGHT & CLEANFLIGHT),90 (PADRÃO INAV)
     RCExpo = 0;
   }
 }
