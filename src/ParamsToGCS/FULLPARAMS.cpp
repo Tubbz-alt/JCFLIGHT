@@ -38,6 +38,7 @@ typedef struct
   uint8_t Param_AutoLaunch_AHRS_BankAngle;
   uint16_t Param_AutoLaunch_IMU_BankAngle;
   uint16_t Param_AutoLaunch_Motor_SpinUp_Time;
+  uint16_t Param_AutoLaunch_Motor_MaxThrottle;
 } Struct_FullParamsList;
 
 Struct_FullParamsList FullParamsList;
@@ -73,6 +74,7 @@ const Requesited_Values_Of_Param Params_Table[] = {
     {"AutoLaunch_AHRS_BankAngle", AL_AHRS_BA_ADDR, VAR_8BITS, &FullParamsList.Param_AutoLaunch_AHRS_BankAngle, 0, 255},
     {"AutoLaunch_IMU_BankAngle", AL_IMU_BA_ADDR, VAR_16BITS, &FullParamsList.Param_AutoLaunch_IMU_BankAngle, 0, 1000},
     {"AutoLaunch_Motor_SpinUp_Time", AL_MOTOR_SPINUP_TIME_ADDR, VAR_16BITS, &FullParamsList.Param_AutoLaunch_Motor_SpinUp_Time, 0, 10000},
+    {"AutoLaunch_Motor_MaxThrottle", AL_MOTOR_MAX_THROTTLE_ADDR, VAR_16BITS, &FullParamsList.Param_AutoLaunch_Motor_MaxThrottle, 1000, 2200},
 };
 
 #define TABLE_COUNT (sizeof(Params_Table) / sizeof(Requesited_Values_Of_Param))

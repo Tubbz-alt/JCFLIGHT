@@ -26,6 +26,7 @@
 #include "Filters/BIQUADFILTER.h"
 #include "Compass/COMPASSREAD.h"
 #include "BAR/BAR.h"
+#include "SensorAlignment/ALIGNMENT.h"
 
 //INSTANCIAS PARA O LPF
 BiQuadFilter BiquadAccLPF[3];
@@ -186,6 +187,8 @@ void Acc_ReadBufferData()
 
   if (CalibratingAccelerometer > 0)
     return;
+
+  ApplySensorAlignment(IMU.AccelerometerRead);
 
   //KALMAN
   if (ActiveKalman)
