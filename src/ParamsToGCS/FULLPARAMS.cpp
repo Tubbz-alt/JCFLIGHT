@@ -79,7 +79,7 @@ const Requesited_Values_Of_Param Params_Table[] = {
 
 void FullParamsListInitialization()
 {
-  SetNewValue("kP_Acc_AHRS", 242);
+  //SetNewValue("kP_Acc_AHRS", 242);
 #ifdef OPERATOR_CHECK_EEPROM
   Operator_Check_Values_In_Address();
 #endif
@@ -93,11 +93,11 @@ void SetNewValue(const char *ParamName, int32_t NewValue)
     {
       if (NewValue >= Params_Table[i].Value_Min && NewValue <= Params_Table[i].Value_Max)
       {
-        if (Params_Table[i].VariableType == VAR_8BITS)
+        if (Params_Table[i].VariableType == VAR_8BITS && NewValue != STORAGEMANAGER.Read_8Bits(Params_Table[i].Address))
           STORAGEMANAGER.Write_8Bits(Params_Table[i].Address, NewValue);
-        else if (Params_Table[i].VariableType == VAR_16BITS)
+        else if (Params_Table[i].VariableType == VAR_16BITS && NewValue != STORAGEMANAGER.Read_16Bits(Params_Table[i].Address))
           STORAGEMANAGER.Write_16Bits(Params_Table[i].Address, NewValue);
-        else if (Params_Table[i].VariableType == VAR_32BITS)
+        else if (Params_Table[i].VariableType == VAR_32BITS && NewValue != STORAGEMANAGER.Read_32Bits(Params_Table[i].Address))
           STORAGEMANAGER.Write_32Bits(Params_Table[i].Address, NewValue);
       }
       else
