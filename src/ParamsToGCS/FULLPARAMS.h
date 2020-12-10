@@ -19,5 +19,5 @@
 #define FULLPARAMS_H_
 #include "Arduino.h"
 void FullParamsListInitialization();
-void SetNewValue(char *ParamName, int32_t NewValue, uint8_t _VarType);
+void SetNewValue(const char *ParamName, int32_t NewValue);
 #endif
